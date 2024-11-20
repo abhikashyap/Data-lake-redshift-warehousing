@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tweets',
+    'amazon',
 ]
 
 MIDDLEWARE = [
@@ -75,13 +76,22 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Database backend for PostgreSQL
+        'NAME': 'amazon_sp_api',            # Replace with your database name
+        'USER': 'postgres',                        # Database user
+        'PASSWORD': 'postgres',             # Replace with the password for the user
+        'HOST': 'localhost',                       # Host (use 'localhost' if running locally or your RDS endpoint)
+        'PORT': '5432',                            # Default PostgreSQL port
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -127,3 +137,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL='/accounts/login'
+LOGIN_REDIRECT_URL='/tweet/'
+LOGOUT_REDIRECT_URL='/tweet/'

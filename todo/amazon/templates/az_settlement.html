@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Amazon Settlement
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Amazon Settlement Data</h1>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <!-- Search Form -->
+    <form method="get" class="pb-4 bg-white dark:bg-gray-900">
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative mt-1">
+            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input
+                type="text"
+                name="q"
+                id="table-search"
+                class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search by ASIN"
+                value="{{ search_query }}"  <!-- Retain the search term -->
+            >
+        </div>
+    </form>
+
+    <!-- Table -->
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th class="px-6 py-3">ASIN</th>
+                <th class="px-6 py-3">Account Name</th>
+                <th class="px-6 py-3">Input Price</th>
+                <th class="px-6 py-3">Total Fees Estimate</th>
+                <th class="px-6 py-3">Referral Fee</th>
+                <th class="px-6 py-3">Final Settlement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for settlement in settlements %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4">{{ settlement.asin }}</td>
+                <td class="px-6 py-4">{{ settlement.account_name }}</td>
+                <td class="px-6 py-4">{{ settlement.input_price }}</td>
+                <td class="px-6 py-4">{{ settlement.totalfeesestimate }}</td>
+                <td class="px-6 py-4">{{ settlement.referralfee }}</td>
+                <td class="px-6 py-4">{{ settlement.final_settlement }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center px-6 py-4">No settlement data available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination mt-4">
+        <span class="step-links">
+            {% if settlements.has_previous %}
+                <a href="?q={{ search_query }}&page=1">First</a>
+                <a href="?q={{ search_query }}&page={{ settlements.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ settlements.number }} of {{ settlements.paginator.num_pages }}.
+            </span>
+
+            {% if settlements.has_next %}
+                <a href="?q={{ search_query }}&page={{ settlements.next_page_number }}">Next</a>
+                <a href="?q={{ search_query }}&page={{ settlements.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
