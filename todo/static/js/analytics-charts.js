@@ -98,27 +98,12 @@ const analyticsCard01 = () => {
   const chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: [
-        '12-01-2022', '01-01-2023', '02-01-2023',
-        '03-01-2023', '04-01-2023', '05-01-2023',
-        '06-01-2023', '07-01-2023', '08-01-2023',
-        '09-01-2023', '10-01-2023', '11-01-2023',
-        '12-01-2023', '01-01-2024', '02-01-2024',
-        '03-01-2024', '04-01-2024', '05-01-2024',
-        '06-01-2024', '07-01-2024', '08-01-2024',
-        '09-01-2024', '10-01-2024', '11-01-2024',
-        '12-01-2024', '01-01-2025',
-      ],
+      labels: chart_data.labels,
       datasets: [
         // Indigo line
         {
-          label: 'Current',
-          data: [
-            5000, 8700, 7500, 12000, 11000, 9500, 10500,
-            10000, 15000, 9000, 10000, 7000, 22000, 7200,
-            9800, 9000, 10000, 8000, 15000, 12000, 11000,
-            13000, 11000, 15000, 17000, 18000,
-          ],
+          label: 'amazon_fulfilled',          
+          data: chart_data.amazon_fulfilled,
           fill: true,
           backgroundColor: function(context) {
             const chart = context.chart;
@@ -140,15 +125,34 @@ const analyticsCard01 = () => {
           clip: 20,
           tension: 0.2,
         },
+        {
+          label: 'self_fulfilled',          
+          data: chart_data.self_fulfilled,
+          fill: true,
+          backgroundColor: function(context) {
+            const chart = context.chart;
+            const {ctx, chartArea} = chart;
+            return chartAreaGradient(ctx, chartArea, [
+              { stop: 0, color: `rgba(${hexToRGB('#87CEEB')}, 0)` },
+              { stop: 1, color: `rgba(${hexToRGB('#87CEEB')}, 0.2)` }
+            ]);
+          },
+          borderColor: '#87CEEB',
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointBackgroundColor: '#87CEEB',
+          pointHoverBackgroundColor: '#87CEEB',
+          pointBorderWidth: 0,
+          pointBorderWidth: 0,
+          pointHoverBorderWidth: 0,       
+          clip: 20,
+          tension: 0.2,
+        },
         // Gray line
         {
-          label: 'Previous',
-          data: [
-            8000, 5000, 6500, 5000, 6500, 12000, 8000,
-            9000, 8000, 8000, 12500, 10000, 10000, 12000,
-            11000, 16000, 12000, 10000, 10000, 14000, 9000,
-            10000, 15000, 12500, 14000, 11000,
-          ],
+          label: 'input_price',
+          data: chart_data.input_price,
           borderColor: `rgba(${hexToRGB('#6B7280')}, 0.25)`,
           fill: false,
           borderWidth: 2,
@@ -185,9 +189,9 @@ const analyticsCard01 = () => {
           type: 'time',
           time: {
             parser: 'MM-DD-YYYY',
-            unit: 'month',
+            unit: 'day',
             displayFormats: {
-              month: 'MMM YY',
+              month: 'MMM D',
             },
           },
           border: {
@@ -205,7 +209,7 @@ const analyticsCard01 = () => {
       },
       plugins: {
         legend: {
-          display: false,
+          display: true,
         },
         tooltip: {
           callbacks: {
