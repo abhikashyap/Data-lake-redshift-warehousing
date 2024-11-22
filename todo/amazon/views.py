@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import AzApiSettlement
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect
+
 
 
 def az_settlement(request):
@@ -97,3 +100,18 @@ def az_settlement(request):
         "search_query":search_query
         })
 
+def az_settlement_with_asin(request, asin=''):
+    """
+    Wraps around the az_settlement view.
+    Converts the ASIN provided in the URL to a search_query and passes it along with other parameters.
+    """
+    # Validate that an ASIN is provided
+    if not asin:
+        return HttpResponseBadRequest("ASIN must be provided in the URL.")
+
+    # Build the query string with the ASIN as search_query
+    query_params = request.GET.copy()  # Copy existing query params
+    query_params['search_query'] = asin  # Add or overwrite the search_query with the ASIN
+
+    # Redirect to the az_settlement view with updated parameters
+    return redirect(f"{request.path.split(asin)[0]}?{query_params.urlencode()}")
