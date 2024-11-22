@@ -355,29 +355,96 @@
             
             <!-- Cards -->
             <div class="grid grid-cols-12 gap-6">
+                <!--  Line chart (Active Users Right Now) -->
+                <div class="flex flex-col col-span-full xl:col-span-8 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+                    <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
+                        <h2 class="font-semibold text-gray-800 dark:text-gray-100">Sales</h2>
+                    </header>
+                    <!-- Card content -->
+                    <div class="flex flex-col h-full">
+                        <!-- Live visitors number -->
+                        <div class="px-5 py-3">
+                            <div class="flex items-center">
+                                <!-- Red dot -->
+
+                                <!-- Vistors number -->
+                                <div class="flex flex-wrap items-center justify-start space-x-6">
+                                    {% for key, value in total_sales_data.items %}
+                                    <div class="flex flex-col items-center bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow">
+                                        <div class="text-3xl font-bold text-gray-800 dark:text-gray-100">{{ value }}</div>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ key }}</div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart built with Chart.js 3 -->
+                        <!-- Check out src/js/analytics-charts.js for config -->
+                        <script>
+                            const sales_chart_data = JSON.parse('{{ sales_chart_data|safe }}');
+
+                        </script>
+                        <div>
+                            <!-- Change the height attribute to adjust the chart height -->
+                            <canvas id="analytics-card-02" width="800" height="200"></canvas>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="grow px-5 pt-3 pb-1">
+                            <div class="overflow-x-auto">
+                                <table class="table-auto w-full dark:text-gray-300">
+                                    <!-- Table header -->
+                                    <thead class="text-xs uppercase text-gray-400 dark:text-gray-500">
+                                        <tr>
+                                            <th class="py-2">
+                                                <div class="font-semibold text-left">State</div>
+                                            </th>
+                                            <th class="py-2">
+                                                <div class="font-semibold text-right">Count of Orders</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Table body -->
+                                    <tbody class="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
+                                        <!-- Row -->
+                                        {% for entry in top_ship_states %}
+                                        <tr>
+                                            <td class="py-2">
+                                                <div class="text-left">{{ entry.ship_state }}</div>
+                                            </td>
+                                            <td class="py-2">
+                                                <div class="font-medium text-right text-gray-800">{{ entry.total_orders }}</div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Card footer -->
+                        <div class="text-right px-5 pb-4">
+                            <a class="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Real-Time Report -&gt;</a>
+                        </div>
+                    </div>
+                </div>
+                
 
                 <!-- Line chart (Analytics) -->
-                <div class="flex flex-col col-span-full xl:col-span-8 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+                <div class="flex flex-col col-span-full xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
                     <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
                         <h2 class="font-semibold text-gray-800 dark:text-gray-100">Settlement</h2>
                     </header>
                     <div class="px-5 py-1">
-                        <div class="flex flex-wrap max-sm:*:w-1/2">
-                            <!-- Unique Visitors -->
-                            {% for key,value in latest_data.items %}
-                            <div class="flex items-center py-2">
-                                <div class="mr-8">
-                                    <div class="flex items-center">
-                                        <div class="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">{{ value }}</div>
-                                        <!-- <div class="text-sm font-medium text-green-600">+49%</div> -->
-                                    </div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ key }}</div>
-                                </div>
-                                <div class="hidden md:block w-px h-8 bg-gray-200 dark:bg-gray-700 mr-5" aria-hidden="true"></div>
+                        <div class="flex flex-nowrap items-center justify-between px-5 py-1 overflow-x-auto">
+                            {% for key, value in latest_data.items %}
+                            <div class="flex flex-col items-center px-4">
+                                <div class="text-3xl font-bold text-gray-800 dark:text-gray-100">{{ value }}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">{{ key }}</div>
                             </div>
                             {% endfor %}
-                            <!-- Total Pageviews -->
-                            
                         </div>
                     </div>
                      <!-- Inject chart data into a global JavaScript variable -->
@@ -392,97 +459,8 @@
                     
                 </div>
 
-                <!--  Line chart (Active Users Right Now) -->
-                <div class="flex flex-col col-span-full xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
-                    <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-                        <h2 class="font-semibold text-gray-800 dark:text-gray-100">Active Users Right Now</h2>
-                    </header>
-                    <!-- Card content -->
-                    <div class="flex flex-col h-full">
-                        <!-- Live visitors number -->
-                        <div class="px-5 py-3">
-                            <div class="flex items-center">
-                                <!-- Red dot -->
 
-                                <!-- Vistors number -->
-                                <div>
-                                    <div class="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">347</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">Live visitors</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Chart built with Chart.js 3 -->
-                        <!-- Check out src/js/analytics-charts.js for config -->
-                        <div>
-                            <!-- Change the height attribute to adjust the chart height -->
-                            <canvas id="analytics-card-02" width="389" height="70"></canvas>
-                        </div>
-
-                        <!-- Table -->
-                        <div class="grow px-5 pt-3 pb-1">
-                            <div class="overflow-x-auto">
-                                <table class="table-auto w-full dark:text-gray-300">
-                                    <!-- Table header -->
-                                    <thead class="text-xs uppercase text-gray-400 dark:text-gray-500">
-                                        <tr>
-                                            <th class="py-2">
-                                                <div class="font-semibold text-left">Top pages</div>
-                                            </th>
-                                            <th class="py-2">
-                                                <div class="font-semibold text-right">Active users</div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <!-- Table body -->
-                                    <tbody class="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
-                                        <!-- Row -->
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="text-left">preview.cruip.com/open-pro/</div>
-                                            </td>
-                                            <td class="py-2">
-                                                <div class="font-medium text-right text-gray-800">94</div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row -->
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="text-left">preview.cruip.com/simple/</div>
-                                            </td>
-                                            <td class="py-2">
-                                                <div class="font-medium text-right text-gray-800">42</div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row -->
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="text-left">cruip.com/unlimited/</div>
-                                            </td>
-                                            <td class="py-2">
-                                                <div class="font-medium text-right text-gray-800">12</div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row -->
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="text-left">preview.cruip.com/twist/</div>
-                                            </td>
-                                            <td class="py-2">
-                                                <div class="font-medium text-right text-gray-800">4</div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Card footer -->
-                        <div class="text-right px-5 pb-4">
-                            <a class="text-sm font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Real-Time Report -&gt;</a>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Stacked bar chart (Acquisition Channels) -->
                 <div class="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">

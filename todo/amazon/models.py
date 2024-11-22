@@ -73,8 +73,6 @@ class GetFlatFileAllOrdersDataByOrderDateGeneral(models.Model):
     account_name = models.CharField(blank=True, null=True)
     updated_date = models.DateTimeField()
 
-    # Relationship based on ASIN
-    settlements = models.ManyToManyField(AzApiSettlement, related_name='related_orders')
 
     class Meta:
         managed = False

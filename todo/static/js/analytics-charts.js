@@ -273,34 +273,25 @@ const analyticsCard02 = () => {
     dark: '#4B5563'
   };
 
-  // eslint-disable-next-line no-unused-vars
+  // Access sales_chart_data (ensure this is defined globally or passed here)
+  if (typeof sales_chart_data === 'undefined') {
+    console.error("sales_chart_data is not defined!");
+    return;
+  }
+
+  // Initialize the chart
   const chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: [
-        '12-01-2022', '01-01-2023', '02-01-2023',
-        '03-01-2023', '04-01-2023', '05-01-2023',
-        '06-01-2023', '07-01-2023', '08-01-2023',
-        '09-01-2023', '10-01-2023', '11-01-2023',
-        '12-01-2023', '01-01-2024', '02-01-2024',
-        '03-01-2024', '04-01-2024', '05-01-2024',
-        '06-01-2024', '07-01-2024', '08-01-2024',
-        '09-01-2024', '10-01-2024', '11-01-2024',
-        '12-01-2024', '01-01-2025',
-      ],
+      labels: sales_chart_data.labels, // Use dynamic labels
       datasets: [
-        // Indigo line
         {
-          data: [
-            732, 610, 610, 504, 504, 504, 349,
-            349, 504, 342, 504, 610, 391, 192,
-            154, 273, 191, 191, 126, 263, 349,
-            252, 423, 622, 470, 532,
-          ],
+          label: 'Quantity Sold', // Dataset label
+          data: sales_chart_data.quantities, // Use dynamic data
           fill: true,
-          backgroundColor: function(context) {
+          backgroundColor: function (context) {
             const chart = context.chart;
-            const {ctx, chartArea} = chart;
+            const { ctx, chartArea } = chart;
             return chartAreaGradient(ctx, chartArea, [
               { stop: 0, color: `rgba(${hexToRGB('#8470FF')}, 0)` },
               { stop: 1, color: `rgba(${hexToRGB('#8470FF')}, 0.2)` }
@@ -313,9 +304,58 @@ const analyticsCard02 = () => {
           pointBackgroundColor: '#8470FF',
           pointHoverBackgroundColor: '#8470FF',
           pointBorderWidth: 0,
-          pointHoverBorderWidth: 0,              
+          pointHoverBorderWidth: 0,
           clip: 20,
           tension: 0.2,
+          yAxisID: 'y-axis-quantity',
+        },
+        {
+          label: 'GMV', // Dataset label
+          data: sales_chart_data.Gmv, // Use dynamic data
+          fill: true,
+          backgroundColor: function (context) {
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            return chartAreaGradient(ctx, chartArea, [
+              { stop: 0, color: `rgba(${hexToRGB('#87CEEB')}, 0)` },
+              { stop: 1, color: `rgba(${hexToRGB('#87CEEB')}, 0.2)` }
+            ]);
+          },
+          borderColor: '#87CEEB',
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointBackgroundColor: '#87CEEB',
+          pointHoverBackgroundColor: '#87CEEB',
+          pointBorderWidth: 0,
+          pointHoverBorderWidth: 0,
+          clip: 20,
+          tension: 0.2,
+          yAxisID: 'y-axis-gmv',
+        },
+        {
+          label: 'Price', // Dataset label
+          data: sales_chart_data.Price, // Use dynamic data
+          fill: true,
+          backgroundColor: function (context) {
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            return chartAreaGradient(ctx, chartArea, [
+              { stop: 0, color: `rgba(${hexToRGB('#3EC972')}, 0)` },
+              { stop: 1, color: `rgba(${hexToRGB('#3EC972')}, 0.2)` }
+            ]);
+          },
+          borderColor: '#3EC972',
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          pointBackgroundColor: '#3EC972',
+          pointHoverBackgroundColor: '#3EC972',
+          pointBorderWidth: 0,
+          pointHoverBorderWidth: 0,
+          clip: 20,
+          tension: 0.2,
+          yAxisID: 'y-axis-price',
         },
       ],
     },
@@ -327,31 +367,49 @@ const analyticsCard02 = () => {
         },
       },
       scales: {
-        y: {
-          display: false,
+        'y-axis-price': {
+          display: true, // Show Y-axis
           beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Price', // Label for Y-axis
+          },
+        },
+        'y-axis-gmv': {
+          display: true, // Show Y-axis
+          beginAtZero: false,
+          position: 'right',
+          title: {
+            display: true,
+            text: 'GMV', // Label for Y-axis
+          },
+          
         },
         x: {
           type: 'time',
           time: {
             parser: 'MM-DD-YYYY',
-            unit: 'month',
+            unit: 'day', // Adjust time unit if needed
           },
-          display: false,
+          display: true, // Show X-axis
+          title: {
+            display: true,
+            text: 'Purchase Date', // Label for X-axis
+          },
         },
       },
       plugins: {
         tooltip: {
           callbacks: {
-            title: () => false, // Disable tooltip title
-            label: (context) => formatThousands(context.parsed.y),
+            title: (context) => context[0].label, // Use the label as the tooltip title
+            label: (context) => `${context.parsed.y}`, // Tooltip content
           },
           bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
           backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
-          borderColor: darkMode ? tooltipBorderColor.dark : tooltipBorderColor.light,          
+          borderColor: darkMode ? tooltipBorderColor.dark : tooltipBorderColor.light,
         },
         legend: {
-          display: false,
+          display: true, // Display legend
         },
       },
       interaction: {
@@ -361,6 +419,8 @@ const analyticsCard02 = () => {
       maintainAspectRatio: false,
     },
   });
+
+  // Handle dark mode toggle dynamically
   document.addEventListener('darkMode', (e) => {
     const { mode } = e.detail;
     if (mode === 'on') {
@@ -373,8 +433,10 @@ const analyticsCard02 = () => {
       chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
     }
     chart.update('none');
-  });  
+  });
 };
+
+// Initialize the chart
 analyticsCard02();
 
 // Init #analytics-03 chart
