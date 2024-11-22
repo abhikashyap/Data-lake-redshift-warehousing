@@ -112,6 +112,6 @@ def az_settlement_with_asin(request, asin=''):
     # Build the query string with the ASIN as search_query
     query_params = request.GET.copy()  # Copy existing query params
     query_params['search_query'] = asin  # Add or overwrite the search_query with the ASIN
-
+    print(query_params)
     # Redirect to the az_settlement view with updated parameters
     return redirect(f"{request.path.split(asin)[0]}?{query_params.urlencode()}")
