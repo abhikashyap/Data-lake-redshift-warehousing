@@ -1,5 +1,3 @@
-
-
 from django.shortcuts import render
 from django.utils.timezone import make_aware, get_current_timezone
 from datetime import datetime, timedelta
