@@ -2,7 +2,7 @@
 
 The underlying theme of the projects is to build data ETL pipelines for an imaginary music streaming startup.
 
-## Project 1: [Data Modeling with PostgreSQL - Relational Databases](https://github.com/ggbong734/udacity-data-engineering/tree/master/relational_db_postgresql)
+## Project 1: [Data Modeling with PostgreSQL - Relational Databases](https://github.com/abhikashyap/Data-lake-redshift-warehousing/tree/main/relational_db_postgresql)
 
 <p align="center"><img src="relational_db_postgresql/postgresql-logo1.png" height= "185"/></p>
 
@@ -24,7 +24,7 @@ Created a NoSQL database using Apache Cassandra to facilitate a few specific que
 Proficiencies used: NoSQL database, Apache Cassandra, Database denormalization
 
 
-## Project 3: [Data Warehousing in Amazon Redshift](https://github.com/ggbong734/udacity-data-engineering/tree/master/data_warehousing_redshift)
+## Project 3: [Data Warehousing in Amazon Redshift](https://github.com/abhikashyap/Data-lake-redshift-warehousing/tree/main/data_warehousing_redshift)
 
 <p align="center"><img src="data_warehousing_redshift/amazon_redshift_logo1.png" height= "160"/></p>
 
@@ -36,7 +36,7 @@ Created a database warehouse utilizing Amazon Redshift. Tasks include:
 Technologies used: Python, Amazon Redshift, SQL, PostgreSQL
 
 
-## Project 4: [Data Lake using PySpark](https://github.com/ggbong734/udacity-data-engineering/tree/master/data_lake_etl_pyspark)
+## Project 4: [Data Lake using PySpark](https://github.com/abhikashyap/Data-lake-redshift-warehousing/tree/main/nosql_db_modeling_cassandra)
 
 <p align="center"><img src="data_lake_etl_pyspark/spark_logo1.jpg" height= "150"/></p>
 
@@ -45,7 +45,7 @@ Enabled distributed computing in the ETL pipeline in project 3 by utilizing PySp
 
 Technologies used: PySpark, S3
 
-## Project 5: [Data Pipelines with Airflow](https://github.com/ggbong734/udacity-data-engineering/tree/master/data_pipelines_airflow)
+## Project 5: [Data Pipelines with Airflow](https://github.com/abhikashyap/Data-lake-redshift-warehousing/tree/main/data_pipelines_airflow)
 
 <p align="center"><img src="data_pipelines_airflow/airflow-image1.png" height= "130"/></p>
 

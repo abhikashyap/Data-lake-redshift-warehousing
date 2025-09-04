@@ -1,4 +1,3 @@
-_This is one of the projects of Udacity's Data Engineer Nanodegree program | Completed on 7/2/2020_
 
 # Project 5: Data Pipelines with Airflow
 

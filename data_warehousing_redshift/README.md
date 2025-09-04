@@ -1,4 +1,3 @@
-_This is one of the projects of Udacity's Data Engineer Nanodegree program | Completed on 5/31/2020_
 
 # Project 3: Data Warehousing in S3 and Redshift
 

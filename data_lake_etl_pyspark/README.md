@@ -1,4 +1,3 @@
-_This is one of the projects of Udacity's Data Engineer Nanodegree program | Completed on 6/14/2020_
 
 # Project 4: Data Lake using PySpark and AWS S3
 

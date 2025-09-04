@@ -1,4 +1,3 @@
-Completed on 5/28/2020 as part of Udacity Data Engineering Nanodegree program project 2_
 
 # Project: Data Modeling with Apache Cassandra
 

@@ -1,4 +1,3 @@
-_Completed on 5/25/2020 as part of Udacity Data Engineering Nanodegree program project 1_
 
 # Project: Data Modeling with PostGreSQL
 
