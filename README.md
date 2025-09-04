@@ -1,4 +1,4 @@
-# Udacity Data Engineering Nanodegree
+
 
 The underlying theme of the projects is to build data ETL pipelines for an imaginary music streaming startup.
 
